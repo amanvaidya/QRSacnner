@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">rcs</string>
+    <string name="turn_off_flashlight">FlashLight on</string>
+    <string name="turn_on_flashlight">flashLight off</string>
+    <string name="title_activity_main">QR and Barcode Scanner</string>
+    <string name="message">Place a barcode inside the viewfinder rectangle to scan it.</string>
+    <string name="title_activity_index">index</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Welcome</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+</resources>
