@@ -11,7 +11,11 @@
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/report"
-            android:title="Report" />
+            android:title="Asset Report" />
+        <item
+            android:id="@+id/nav_report"
+            android:icon="@drawable/report"
+            android:title="Remarks Report" />
 
         <item
             android:id="@+id/nav_logout"

@@ -1,4 +1,8 @@
 package com.aman.qrsacnner;
+//QR will be decoded using open source library from git-hub: https://github.com/journeyapps/zxing-android-embedded/tree/master/zxing-android-embedded
+//Connection with db is through JTDS drivers.
+//No rest api is called in this application
+//This application is connected with MSSQL DB
 
 import android.content.Intent;
 import android.os.Handler;

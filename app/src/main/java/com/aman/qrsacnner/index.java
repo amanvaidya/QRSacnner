@@ -52,26 +52,31 @@ public class index extends AppCompatActivity
         try {
             ConnectionClass connectionClass = new ConnectionClass();
             connect = connectionClass.CONN();
-            query = "select count(distinct asset_id) from multiple_audit where initiator not in ('-')";
+            //Query for pie charts
+            //Qry-1
+            query = "select count(distinct column_name) from table_name where initiator not in ('-')";
             stmt = connect.prepareStatement(query);
             rs = stmt.executeQuery();
             if(rs.next()){
                 asset_count=rs.getInt(1);
             }
-            query = "select count(distinct initiator) from multiple_audit where initiator not in ('-')";
+            //Qry-2
+            query = "select count(distinct column_name) from table_name where initiator not in ('-')";
             stmt = connect.prepareStatement(query);
             rs = stmt.executeQuery();
             if(rs.next()){
                 user_count=rs.getInt(1);
             }
-            query = "select count (distinct asset_id) from multiple_audit where initiator =?";
+            //Qry-3
+            query = "select count (distinct column_name) from table_name where initiator =?";
             stmt = connect.prepareStatement(query);
             stmt.setString(1,user_name.toString());
             rs = stmt.executeQuery();
             if(rs.next()){
                 user_audit_count=rs.getInt(1);
             }
-            query = "select count (distinct audit_name) from multiple_audit ";
+            //Qry-4
+            query = "select count (distinct column_name) from table_name ";
             stmt = connect.prepareStatement(query);
             rs = stmt.executeQuery();
             if(rs.next()){
@@ -172,7 +177,12 @@ public class index extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
             Intent newInt = new Intent(index.this, scanned.class);
             startActivity(newInt);
-        } else if (id == R.id.nav_logout) {
+        }
+        else if (id == R.id.nav_report) {
+            Intent newInt = new Intent(index.this, scannedRemarks.class);
+            startActivity(newInt);
+        }
+        else if (id == R.id.nav_logout) {
             SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
             sp.edit().putBoolean("logged", false).apply();
             SharedPreferences.Editor editor = prf.edit();

@@ -1,4 +1,5 @@
 package com.aman.qrsacnner;
+//To display things in spinner(dropdown)
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,7 +35,9 @@ public class ForSpinner extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         ConnectionClass connectionClass = new ConnectionClass();
         connect = connectionClass.CONN();
-        String query = "select distinct audit_name from multiple_audit";
+
+
+        String query = "select distinct column_name from table_name";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_for_spinner);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -91,5 +94,7 @@ public class ForSpinner extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
+        Intent i = new Intent(ForSpinner.this,index.class);
+        startActivity(i);
     }
 }

@@ -1,20 +1,16 @@
 package com.aman.qrsacnner;
-//To generate reports in scroll view or how to populate data in scroll view
-//in current case report is there wih 2 columns
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aman.qrsacnner.DbHandler.ConnectionClass;
 
@@ -24,7 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class scanned extends AppCompatActivity {
+public class scannedRemarks extends AppCompatActivity {
     Connection connect;
     PreparedStatement stmt;
     ResultSet rs;
@@ -42,7 +38,7 @@ public class scanned extends AppCompatActivity {
         connect = connectionClass.CONN();
         String query = "select distinct column_name,column_name from table_name where initiator=?";
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scanned);
+        setContentView(R.layout.activity_scanned_remarks);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -55,9 +51,9 @@ public class scanned extends AppCompatActivity {
             }
         });
         txtView=(TextView) findViewById(R.id.scannedView);
-        txtView.setText("Asset Id's Scanned By:"+emp_name.toString());
-        tableLayout=(TableLayout) findViewById(R.id.table);
+        txtView.setText("Remarks Provided By:"+emp_name.toString());
 
+        tableLayout=(TableLayout) findViewById(R.id.table);
         try {
             stmt = connect.prepareStatement(query);
             stmt.setString(1,user_name.toString());
@@ -65,19 +61,20 @@ public class scanned extends AppCompatActivity {
             ArrayList<String> data = new ArrayList<String>();
             while (rs.next()) {
                 tableLayout.removeAllViewsInLayout();
-                String id = rs.getString("asset_id");
+                //Here call the column by column name from db
+                String id = rs.getString("remarks");
                 data.add(id);
             }
             String[] array = data.toArray(new String[0]);
             for (int i=0;i<array.length;i++){
-                TableRow t=new TableRow(scanned.this);
+                TableRow t=new TableRow(scannedRemarks.this);
                 t.setLayoutParams(new TableLayout.LayoutParams(
                         TableRow.LayoutParams.FILL_PARENT,
                         TableRow.LayoutParams.WRAP_CONTENT));
                 t.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                TextView b6=new TextView(scanned.this);
-                TextView b7=new TextView(scanned.this);
-                b6.setText("Scanned Id:"+"\t"+"\t");
+                TextView b6=new TextView(scannedRemarks.this);
+                TextView b7=new TextView(scannedRemarks.this);
+                b6.setText("Remarks:"+"\t"+"\t");
                 b6.setTextColor(Color.BLACK);
                 b6.setGravity(Gravity.CENTER);
                 b6.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -102,8 +99,7 @@ public class scanned extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(scanned.this,index.class);
+        Intent i = new Intent(scannedRemarks.this,index.class);
         startActivity(i);
-
     }
 }

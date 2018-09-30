@@ -7,12 +7,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.annotation.SuppressLint;
@@ -37,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     String ast_id, audit_name, user_name;
     SharedPreferences prf, sp;
     TextView txtView;
+    EditText remarks;
+    Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +69,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new IntentIntegrator(MainActivity.this).setCaptureActivity(ScannerActivity.class).initiateScan();
+            }
+        });
+        remarks = (EditText)findViewById(R.id.remarks);
+        //remarks=rem.getText().toString();
+        btn = findViewById(R.id.button3);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Here1");
+                SubmitAsset subass = new SubmitAsset();
+                System.out.println("here2");
+                subass.execute();
+
             }
         });
     }
@@ -115,23 +133,34 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            String assetid = ast_id;
+            String assetid = ast_id==null?"-":ast_id;
+            System.out.println("assetid"+assetid);
+            String rem = remarks.getText().toString()==null?"-":remarks.getText().toString();
+            boolean flag = false;
+            if(!assetid.equals("-")||!rem.equals("-")){
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
 
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(),
+                                "Submitted",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+            System.out.println("rem"+rem);
             try {
                 ConnectionClass connectionClass = new ConnectionClass();
                 connect = connectionClass.CONN();
-                String query = "insert into multiple_audit (asset_id,date,location,sublocation,facility,cubicle,audit_name,initiator) values (?,getDate(),'0','0','0','0',?,?)";
+                String query = "insert into table_name (column_name,column_name,column_name,column_name,column_name,column_name,column_name,column_name,column_name) values (?,getDate(),'0','0','0','0',?,?,?)";
                 stmt = connect.prepareStatement(query);
                 stmt.setString(1, assetid);
                 stmt.setString(2, audit_name.toString());
                 stmt.setString(3, user_name.toString());
-                rs = stmt.executeQuery();
-                if (rs.next()) {
-                    Toast.makeText(MainActivity.this, "Asset Id Submitted", Toast.LENGTH_SHORT).show();
-                } else {
-                    z = "Asset Id is Required";
-                    isSuccess = false;
-                }
+                stmt.setString(4, rem);
+                stmt.executeUpdate();
+
 
             } catch (Exception ex) {
                 isSuccess = false;
@@ -144,6 +173,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        Intent i = new Intent(MainActivity.this,ForSpinner.class);
+        startActivity(i);
     }
 
 }
