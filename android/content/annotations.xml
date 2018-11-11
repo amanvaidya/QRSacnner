@@ -1,0 +1,5 @@
+<root>
+    <item name='android.content.Context MODE_PRIVATE'>
+        <annotation name='android.support.annotation.NonNull' />
+    </item>
+</root>
