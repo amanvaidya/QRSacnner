@@ -17,5 +17,9 @@
     <corners
         android:radius="2dp"   >
     </corners>
-
+    <layer-list android:opacity="transparent" xmlns:android="http://schemas.android.com/apk/res/android">
+        <item android:width="100dp" android:gravity="right" android:start="300dp">
+            <bitmap android:src="@drawable/dropdown" android:gravity="center"/>
+        </item>
+    </layer-list>
 </shape>

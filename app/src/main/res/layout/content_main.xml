@@ -8,47 +8,72 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.aman.qrsacnner.MainActivity"
     tools:showIn="@layout/activity_main">
-
-
-    <Button
-        android:id="@+id/buttonScan"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="171dp"
-        android:text="Scan" />
+        android:paddingTop="56dp"
+        android:layout_gravity="center"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
+        <Button
+            android:id="@+id/buttonScan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="171dp"
+            android:text="Scan"
+            android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="OR"
+            android:textColor="#000"
+            android:layout_gravity="center"/>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textColorHint="#000">
+            <EditText
+                android:id="@+id/remarks1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Type Asset Id Here"
+                android:textColor="#000"
+                android:backgroundTint="#000"
+                android:textColorHint="#000"
+                android:layout_gravity="center"/>
 
-    <EditText
-        android:id="@+id/remarks"
-        android:layout_width="199dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="162dp"
-        android:layout_marginStart="15dp"
-        android:background="#a9a9a9"
-        android:hint="Asset Remark"
-        android:padding="8dp"
-        android:textAlignment="center"
-        android:textColor="#000"
-        android:textColorHint="#000" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:textColorHint="#000">
+        <EditText
+            android:id="@+id/remarks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Type Asset Remarks Here"
+            android:textColor="#000"
+            android:backgroundTint="#000"
+            android:layout_gravity="center"/>
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/remarks"
+            android:layout_marginEnd="14dp"
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="OR"
-        android:textColor="#000"/>
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/remarks"
-        android:layout_marginEnd="14dp"
-        android:text="Save" />
-
+            android:text="Save"
+            android:layout_gravity="right"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
 </RelativeLayout>
