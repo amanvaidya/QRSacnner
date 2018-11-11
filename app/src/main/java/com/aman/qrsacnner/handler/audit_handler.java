@@ -23,7 +23,7 @@ public class audit_handler{
         List<String> audit = new ArrayList<>();
         audit.add("Select Audit");
         Gson gson = new Gson();
-        statement = connect.prepareStatement("select distinct audit_name from multiple_audit");
+        statement = connect.prepareStatement("select distinct column_name from table_name");
         resultSet = statement.executeQuery();
         while (resultSet.next()) {
             String audit_array = new String(resultSet.getString(1));
