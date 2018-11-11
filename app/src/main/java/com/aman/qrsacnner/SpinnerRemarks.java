@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.aman.qrsacnner.DbHandler.ConnectionClass;
+import com.aman.qrsacnner.handler.audit_handler;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,9 +32,6 @@ public class SpinnerRemarks extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         ConnectionClass connectionClass = new ConnectionClass();
         connect = connectionClass.CONN();
-
-
-        String query = "select distinct audit_name from multiple_audit";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spinner_remarks);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -58,24 +56,15 @@ public class SpinnerRemarks extends AppCompatActivity {
             }
         });
         try {
-            stmt = connect.prepareStatement(query);
-            rs = stmt.executeQuery();
-            ArrayList<String> data = new ArrayList<String>();
-            data.add("Click to Select Audit");
-            while (rs.next()) {
-                String id = rs.getString("audit_name");
-                data.add(id);
-            }
-            String[] array = data.toArray(new String[0]);
+            audit_handler audit_handler=new audit_handler();
+            String[] data = audit_handler.audit_handler().toArray(new String[0]);
             ArrayAdapter NoCoreAdapter = new ArrayAdapter(this,
                     android.R.layout.simple_list_item_1, data);
             spinnercountry.setAdapter(NoCoreAdapter);
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
         spinnercountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {

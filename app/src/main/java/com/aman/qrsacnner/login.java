@@ -99,9 +99,9 @@ public class login extends AppCompatActivity {
                     editor.putString("username", usernam);
                     editor.putString("emp_name", emp_name);
                     editor.commit();
-                                Intent intent = new Intent(login.this, index.class);
-                                intent.putExtra("username", usernam);
-                                startActivity(intent);
+                    Intent intent = new Intent(login.this, index.class);
+                    intent.putExtra("username", usernam);
+                    startActivity(intent);
 
                 } else {
                     z = "Invalid Credentials!";
