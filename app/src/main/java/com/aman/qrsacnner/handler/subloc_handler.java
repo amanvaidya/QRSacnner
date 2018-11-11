@@ -34,7 +34,7 @@ public class subloc_handler {
                 final List<String> subloc = new ArrayList<>();
                 Gson gson = new Gson();
                 System.out.println("Aman Subloc Size::"+subloc.size());
-                    statement = connect.prepareStatement("select distinct subloc_name from sublocation_master");
+                    statement = connect.prepareStatement("select distinct column_name from table_name");
                     resultSet = statement.executeQuery();
                     while (resultSet.next()) {
                         final String sublocArray = new String(resultSet.getString(1));
