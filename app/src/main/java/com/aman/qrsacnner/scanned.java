@@ -28,19 +28,22 @@ public class scanned extends AppCompatActivity {
     Connection connect;
     PreparedStatement stmt;
     ResultSet rs;
-    String user_name, emp_name;
-    SharedPreferences sp;
+    String user_name, emp_name, audit_name;
+    SharedPreferences sp,prf;
     boolean flag;
     TableLayout tableLayout;
     TextView txtView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sp = getSharedPreferences("user_details", MODE_PRIVATE);
+        prf = getSharedPreferences("audit_name", MODE_PRIVATE);
         user_name = sp.getString("username", null);
         emp_name = sp.getString("emp_name", null);
+        audit_name = prf.getString("audit_name", null);
+        System.out.println("audit_name:::"+audit_name.toString());
         ConnectionClass connectionClass = new ConnectionClass();
         connect = connectionClass.CONN();
-        String query = "select distinct column_name,column_name from table_name where initiator=?";
+        String query = "select distinct asset_id,date from multiple_audit where initiator=? and audit_name=?";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanned);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -55,12 +58,13 @@ public class scanned extends AppCompatActivity {
             }
         });
         txtView=(TextView) findViewById(R.id.scannedView);
-        txtView.setText("Asset Id's Scanned By:"+emp_name.toString());
+        txtView.setText("Asset Id's Scanned By: "+emp_name.toString()+" for audit: "+audit_name.toString());
         tableLayout=(TableLayout) findViewById(R.id.table);
 
         try {
             stmt = connect.prepareStatement(query);
             stmt.setString(1,user_name.toString());
+            stmt.setString(2,audit_name.toString());
             rs = stmt.executeQuery();
             ArrayList<String> data = new ArrayList<String>();
             while (rs.next()) {

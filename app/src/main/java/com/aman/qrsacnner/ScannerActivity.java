@@ -1,7 +1,8 @@
 package com.aman.qrsacnner;
 //To read qr code from
 //Note in this case zing library is used to decode the bar code.
-//If ever want to check how it works goto: https://github.com/journeyapps/zxing-android-embedded/tree/master/zxing-android-embedded
+//If ever want to check how it works goto https://github.com/journeyapps/zxing-android-embedded/tree/master/zxing-android-embedded
+
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;

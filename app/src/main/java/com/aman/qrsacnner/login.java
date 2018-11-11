@@ -1,28 +1,21 @@
 package com.aman.qrsacnner;
 
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.StrictMode;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethod;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.aman.qrsacnner.DbHandler.ConnectionClass;
 
@@ -33,8 +26,8 @@ public class login extends AppCompatActivity {
     SharedPreferences sp, pref;
 
     Connection connect;
-    PreparedStatement stmt;
-    ResultSet rs;
+    PreparedStatement stmt,stmt1;
+    ResultSet rs,rs1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,38 +79,39 @@ public class login extends AppCompatActivity {
             String emp_name="";
             if (usernam.trim().equals("") || passwordd.trim().equals(""))
                 z = "Please enter Username and Password";
-            else {
-                try {
-                    ConnectionClass connectionClass = new ConnectionClass();
+            else try {
+                ConnectionClass connectionClass = new ConnectionClass();
 
-                    connect = connectionClass.CONN();
-                    //Currently only using 1 column.. Edit as required
-                    String query = "select column_name from table_name where column_name= ? and column_name =?";
-                    //System.out.println(query);
-                    stmt = connect.prepareStatement(query);
-                    stmt.setString(1, usernam.toString());
-                    stmt.setString(2, passwordd.toString());
-                    rs = stmt.executeQuery();
-                    if (rs.next()) {
-                        emp_name=rs.getString(1);
-                        sp.edit().putBoolean("logged", true).apply();
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.putString("username", usernam);
-                        editor.putString("emp_name", emp_name);
-                        editor.commit();
-                        Intent intent = new Intent(login.this, index.class);
-                        intent.putExtra("username", usernam);
-                        startActivity(intent);
-                    } else {
-                        z = "Invalid Credentials!";
-                        isSuccess = false;
-                    }
+                connect = connectionClass.CONN();
+                //Currently only using 1 column.. Edit as required
+                String query = "select emp_name from user_manager where login_name= ? and password =?";
+                //System.out.println(query);
+                stmt = connect.prepareStatement(query);
+                stmt.setString(1, usernam.toString());
+                stmt.setString(2, passwordd.toString());
+                rs = stmt.executeQuery();
+                if (rs.next()) {
+                    emp_name = rs.getString(1);
 
-                } catch (Exception ex) {
-                    System.out.print("Error While Connecting" + ex);
+
+                    sp.edit().putBoolean("logged", true).apply();
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("username", usernam);
+                    editor.putString("emp_name", emp_name);
+                    editor.commit();
+                                Intent intent = new Intent(login.this, index.class);
+                                intent.putExtra("username", usernam);
+                                startActivity(intent);
+
+                } else {
+                    z = "Invalid Credentials!";
                     isSuccess = false;
-                    z = ex.getMessage();
                 }
+
+            } catch (Exception ex) {
+                System.out.print("Error While Connecting" + ex);
+                isSuccess = false;
+                z = ex.getMessage();
             }
             return z;
         }

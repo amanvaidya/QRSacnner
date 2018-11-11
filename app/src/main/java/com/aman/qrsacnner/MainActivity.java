@@ -37,14 +37,17 @@ public class MainActivity extends AppCompatActivity {
     Connection connect;
     PreparedStatement stmt;
     ResultSet rs;
-    String ast_id, audit_name, user_name;
-    SharedPreferences prf, sp;
+    String ast_id, audit_name, user_name, subloc_name;
+    SharedPreferences prf, sp, sharedPreferences;
     TextView txtView;
     EditText remarks;
+    EditText remarks1;
     Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ConnectionClass connectionClass = new ConnectionClass();
+        connect = connectionClass.CONN();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -62,7 +65,11 @@ public class MainActivity extends AppCompatActivity {
         Button buttonBarCodeScan = findViewById(R.id.buttonScan);
         prf = getSharedPreferences("audit_name", MODE_PRIVATE);
         sp = getSharedPreferences("user_details", MODE_PRIVATE);
+        //prf = getSharedPreferences("selectedFromList", MODE_PRIVATE);
         audit_name = prf.getString("audit_name", null);
+        subloc_name = prf.getString("selectedFromList",null);
+        System.out.println(audit_name.toString());
+        System.out.println(subloc_name);
         user_name = sp.getString("username", null);
         buttonBarCodeScan.setOnClickListener(new View.OnClickListener() {
 
@@ -72,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         remarks = (EditText)findViewById(R.id.remarks);
+        remarks1 = (EditText) findViewById(R.id.remarks1);
         //remarks=rem.getText().toString();
         btn = findViewById(R.id.button3);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
                 SubmitAsset subass = new SubmitAsset();
                 System.out.println("here2");
                 subass.execute();
+                remarks.setText("");
+                remarks1.setText("");
 
             }
         });
@@ -114,9 +124,11 @@ public class MainActivity extends AppCompatActivity {
                         ast_id = result;
                         SubmitAsset subass = new SubmitAsset();
                         subass.execute();
-                        ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                        ClipData clip = ClipData.newPlainText("Scan Result", result);
-                        clipboard.setPrimaryClip(clip);
+                        new IntentIntegrator(MainActivity.this).setCaptureActivity(ScannerActivity.class).initiateScan();
+
+                        //ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                        //ClipData clip = ClipData.newPlainText("Scan Result", result);
+                        //clipboard.setPrimaryClip(clip);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -133,11 +145,15 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            String assetid = ast_id==null?"-":ast_id;
+            String assetid = ast_id==null?"":ast_id;
+            if(assetid.equals("")){
+                assetid=remarks1.getText().toString();
+            }
             System.out.println("assetid"+assetid);
             String rem = remarks.getText().toString()==null?"-":remarks.getText().toString();
+            System.out.println("Remarks"+rem);
             boolean flag = false;
-            if(!assetid.equals("-")||!rem.equals("-")){
+            if(assetid.contains("-")){
                 Handler handler = new Handler(Looper.getMainLooper());
                 handler.post(new Runnable() {
 
@@ -148,18 +164,21 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
+
             }
-            System.out.println("rem"+rem);
+           // System.out.println("rem"+rem);
+            //System.out.println("assetid"+assetid);
             try {
                 ConnectionClass connectionClass = new ConnectionClass();
                 connect = connectionClass.CONN();
-                String query = "insert into table_name (column_name,column_name,column_name,column_name,column_name,column_name,column_name,column_name,column_name) values (?,getDate(),'0','0','0','0',?,?,?)";
+                String query = "insert into multiple_audit (asset_id,date,location,sublocation,facility,cubicle,audit_name,initiator,remarks) values (?,getDate(),'0','0','0','0',?,?,?)";
                 stmt = connect.prepareStatement(query);
                 stmt.setString(1, assetid);
                 stmt.setString(2, audit_name.toString());
                 stmt.setString(3, user_name.toString());
                 stmt.setString(4, rem);
                 stmt.executeUpdate();
+                ast_id="";
 
 
             } catch (Exception ex) {

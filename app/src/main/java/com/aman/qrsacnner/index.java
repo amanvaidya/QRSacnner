@@ -30,18 +30,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+
 public class index extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,OnChartValueSelectedListener {
     String header_text;
     View mHeaderView;
     TextView txtView;
     SharedPreferences prf;
-    Connection connect;
-    PreparedStatement stmt;
-    ResultSet rs;
-    SharedPreferences sp;
+    Connection connect, connection;
+    PreparedStatement stmt,stmt1;
+    ResultSet rs,rs1;
+    SharedPreferences sp,pref;
     String user_name;
     String query;
+
     int user_count,audit_count,user_audit_count,asset_count;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,40 +51,49 @@ public class index extends AppCompatActivity
         sp = getSharedPreferences("user_details", MODE_PRIVATE);
         user_name = sp.getString("username", null);
         prf = getSharedPreferences("user_details", MODE_PRIVATE);
-        try {
+        try
+        {
             ConnectionClass connectionClass = new ConnectionClass();
             connect = connectionClass.CONN();
+
+
+
             //Query for pie charts
             //Qry-1
-            query = "select count(distinct column_name) from table_name where initiator not in ('-')";
+            query = "select count(distinct asset_id) from multiple_audit where initiator not in ('-')";
             stmt = connect.prepareStatement(query);
             rs = stmt.executeQuery();
-            if(rs.next()){
+            if(rs.next())
+            {
                 asset_count=rs.getInt(1);
             }
             //Qry-2
-            query = "select count(distinct column_name) from table_name where initiator not in ('-')";
+            query = "select count(distinct initiator) from multiple_audit where initiator not in ('-')";
             stmt = connect.prepareStatement(query);
             rs = stmt.executeQuery();
-            if(rs.next()){
+            if(rs.next())
+            {
                 user_count=rs.getInt(1);
             }
             //Qry-3
-            query = "select count (distinct column_name) from table_name where initiator =?";
+            query = "select count (distinct sublocation) from multiple_audit where initiator =?";
             stmt = connect.prepareStatement(query);
             stmt.setString(1,user_name.toString());
             rs = stmt.executeQuery();
-            if(rs.next()){
+            if(rs.next())
+            {
                 user_audit_count=rs.getInt(1);
             }
             //Qry-4
-            query = "select count (distinct column_name) from table_name ";
+            query = "select count (distinct audit_name) from multiple_audit";
             stmt = connect.prepareStatement(query);
             rs = stmt.executeQuery();
-            if(rs.next()){
+            if(rs.next())
+            {
                 audit_count=rs.getInt(1);
             }
-        }catch (Exception ex){
+        }catch (Exception ex)
+        {
 
         }
         /**/
@@ -98,8 +109,8 @@ public class index extends AppCompatActivity
         ArrayList<Entry> yvalues = new ArrayList<Entry>();
         yvalues.add(new Entry(Math.round(asset_count), 0));
         yvalues.add(new Entry(Math.round(user_count), 1));
-        yvalues.add(new Entry(Math.round(user_audit_count), 2));
-        yvalues.add(new Entry(Math.round(audit_count), 3));
+       // yvalues.add(new Entry(Math.round(user_audit_count), 2));
+        yvalues.add(new Entry(Math.round(audit_count), 2));
 
 
         PieDataSet dataSet = new PieDataSet(yvalues, "Audits");
@@ -108,7 +119,7 @@ public class index extends AppCompatActivity
 
         xVals.add("Total Assets Audited");
         xVals.add("Total Auditors");
-        xVals.add("Asset Audited By:"+prf.getString("emp_name", null));
+       // xVals.add("Branches Audited");
         xVals.add("Total Audits");
 
         PieData data = new PieData(xVals, dataSet);
@@ -146,7 +157,8 @@ public class index extends AppCompatActivity
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -169,17 +181,16 @@ public class index extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        System.out.print("here");
         int id = item.getItemId();
         if (id == R.id.nav_camera) {
             Intent intent = new Intent(index.this, ForSpinner.class);
             startActivity(intent);
         } else if (id == R.id.nav_gallery) {
-            Intent newInt = new Intent(index.this, scanned.class);
+            Intent newInt = new Intent(index.this, SpinnerAsset.class);
             startActivity(newInt);
         }
         else if (id == R.id.nav_report) {
-            Intent newInt = new Intent(index.this, scannedRemarks.class);
+            Intent newInt = new Intent(index.this, SpinnerRemarks.class);
             startActivity(newInt);
         }
         else if (id == R.id.nav_logout) {
