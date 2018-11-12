@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
@@ -109,8 +108,7 @@ public class MainActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-
-    public void showResultDialogue(final String result) {
+   public void showResultDialogue(final String result) {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
@@ -126,16 +124,19 @@ public class MainActivity extends AppCompatActivity {
                         subass.execute();
                         new IntentIntegrator(MainActivity.this).setCaptureActivity(ScannerActivity.class).initiateScan();
 
-                        //ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                        //ClipData clip = ClipData.newPlainText("Scan Result", result);
-                        //clipboard.setPrimaryClip(clip);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
-                })
+                }).setNeutralButton("Close", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                ast_id = result;
+                SubmitAsset subass = new SubmitAsset();
+                subass.execute();
+                    }
+        })
                 .show();
     }
 
@@ -166,8 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
             }
-           // System.out.println("rem"+rem);
-            //System.out.println("assetid"+assetid);
+
             try {
                 ConnectionClass connectionClass = new ConnectionClass();
                 connect = connectionClass.CONN();
