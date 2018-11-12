@@ -22,19 +22,12 @@ import java.util.ArrayList;
 
 public class SpinnerAsset extends AppCompatActivity {
     Spinner spinnercountry;
-    Connection connect;
-    PreparedStatement stmt;
-    ResultSet rs;
+
     Button btn;
     String name;
     SharedPreferences sp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ConnectionClass connectionClass = new ConnectionClass();
-        connect = connectionClass.CONN();
-
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spinner_asset);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
