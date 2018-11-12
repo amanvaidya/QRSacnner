@@ -40,6 +40,7 @@
         <activity android:name=".scannedRemarks" />
         <activity android:name=".SpinnerAsset" />
         <activity android:name=".SpinnerRemarks" />
+        <activity android:name=".recon_report"></activity>
     </application>
 
 </manifest>

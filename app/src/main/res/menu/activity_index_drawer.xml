@@ -16,7 +16,10 @@
             android:id="@+id/nav_report"
             android:icon="@drawable/report"
             android:title="Remarks Report" />
-
+        <item
+            android:id="@+id/recon_report"
+            android:icon="@drawable/report"
+            android:title="Recon Report" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/logout"

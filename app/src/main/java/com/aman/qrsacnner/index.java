@@ -193,6 +193,10 @@ public class index extends AppCompatActivity
             Intent newInt = new Intent(index.this, SpinnerRemarks.class);
             startActivity(newInt);
         }
+        else if (id == R.id.recon_report) {
+            Intent newInt = new Intent(index.this, recon_report.class);
+            startActivity(newInt);
+        }
         else if (id == R.id.nav_logout) {
             SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
             sp.edit().putBoolean("logged", false).apply();

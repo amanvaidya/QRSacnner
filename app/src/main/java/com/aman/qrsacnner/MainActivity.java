@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     EditText remarks;
     EditText remarks1;
     Button btn;
-
+    int subloc_id=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ConnectionClass connectionClass = new ConnectionClass();
@@ -65,9 +65,20 @@ public class MainActivity extends AppCompatActivity {
         Button buttonBarCodeScan = findViewById(R.id.buttonScan);
         prf = getSharedPreferences("audit_name", MODE_PRIVATE);
         sp = getSharedPreferences("user_details", MODE_PRIVATE);
-        //prf = getSharedPreferences("selectedFromList", MODE_PRIVATE);
         audit_name = prf.getString("audit_name", null);
         subloc_name = prf.getString("selectedFromList",null);
+
+        try {
+            stmt=connect.prepareStatement("select subloc_id from sublocation_master where subloc_name=?");
+            stmt.setString(1,subloc_name);
+            rs=stmt.executeQuery();
+            if(rs.next()){
+                subloc_id=rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         System.out.println(audit_name.toString());
         System.out.println(subloc_name);
         user_name = sp.getString("username", null);
@@ -85,9 +96,7 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Here1");
                 SubmitAsset subass = new SubmitAsset();
-                System.out.println("here2");
                 subass.execute();
                 remarks.setText("");
                 remarks1.setText("");
@@ -171,12 +180,13 @@ public class MainActivity extends AppCompatActivity {
             try {
                 ConnectionClass connectionClass = new ConnectionClass();
                 connect = connectionClass.CONN();
-                String query = "insert into multiple_audit (asset_id,date,location,sublocation,facility,cubicle,audit_name,initiator,remarks) values (?,getDate(),'0','0','0','0',?,?,?)";
+                String query = "insert into multiple_audit (asset_id,date,location,sublocation,facility,cubicle,audit_name,initiator,remarks) values (?,getDate(),'0',?,'0','0',?,?,?)";
                 stmt = connect.prepareStatement(query);
                 stmt.setString(1, assetid);
-                stmt.setString(2, audit_name.toString());
-                stmt.setString(3, user_name.toString());
-                stmt.setString(4, rem);
+                stmt.setInt(2,subloc_id);
+                stmt.setString(3, audit_name.toString());
+                stmt.setString(4, user_name.toString());
+                stmt.setString(5, rem);
                 stmt.executeUpdate();
                 ast_id="";
 
@@ -184,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception ex) {
                 isSuccess = false;
                 z = ex.getMessage();
+                System.out.println("Aman Error Here is::"+ex);
             }
 
             return z;

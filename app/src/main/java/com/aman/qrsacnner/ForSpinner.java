@@ -116,7 +116,7 @@ public class ForSpinner extends AppCompatActivity {
                                 //System.out.println(selectedFromList.toString());
                                 SharedPreferences.Editor editor = sp.edit();
                                 editor.putString("audit_name", name);
-                                System.out.println(selectedFromList);
+                                //System.out.println(selectedFromList);
                                 editor.putString("selectedFromList", selectedFromList);
                                 editor.commit();
 
