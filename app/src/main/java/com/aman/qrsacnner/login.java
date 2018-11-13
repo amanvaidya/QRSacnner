@@ -84,11 +84,11 @@ public class login extends AppCompatActivity {
 
                 connect = connectionClass.CONN();
                 //Currently only using 1 column.. Edit as required
-                String query = "select emp_name from user_manager where login_name= ? and password =?";
+                String query = "select column_name from table_name where column_name =?";
                 //System.out.println(query);
                 stmt = connect.prepareStatement(query);
                 stmt.setString(1, usernam.toString());
-                stmt.setString(2, passwordd.toString());
+                
                 rs = stmt.executeQuery();
                 if (rs.next()) {
                     emp_name = rs.getString(1);
