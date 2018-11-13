@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         subloc_name = prf.getString("selectedFromList",null);
 
         try {
-            stmt=connect.prepareStatement("select subloc_id from sublocation_master where subloc_name=?");
+            stmt=connect.prepareStatement("select column_name from table_name where column_name=?");
             stmt.setString(1,subloc_name);
             rs=stmt.executeQuery();
             if(rs.next()){
@@ -180,13 +180,10 @@ public class MainActivity extends AppCompatActivity {
             try {
                 ConnectionClass connectionClass = new ConnectionClass();
                 connect = connectionClass.CONN();
-                String query = "insert into multiple_audit (asset_id,date,location,sublocation,facility,cubicle,audit_name,initiator,remarks) values (?,getDate(),'0',?,'0','0',?,?,?)";
+                String query = "insert into multiple_audit (column_names) values (?,getDate(),'0',?,'0','0',?,?,?)";
                 stmt = connect.prepareStatement(query);
                 stmt.setString(1, assetid);
-                stmt.setInt(2,subloc_id);
-                stmt.setString(3, audit_name.toString());
-                stmt.setString(4, user_name.toString());
-                stmt.setString(5, rem);
+                
                 stmt.executeUpdate();
                 ast_id="";
 
