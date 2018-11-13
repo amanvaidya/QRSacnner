@@ -55,7 +55,7 @@ public class recon_report extends AppCompatActivity {
         txtView=(TextView) findViewById(R.id.scannedView);
         txtView.setText("Recon Report For Found Asset Id's Scanned By:"+emp_name.toString());
         TextView reportText = (TextView) findViewById(R.id.reportText);
-        reportText.setText("Asset Id"+"\t"+"\t"+"\t"+"\t"+"\t"+"\t"+"Tagged Branch"+"\t"+"\t"+"\t"+"Actual Branch");
+        reportText.setText("Asset Id"+"\t\t\t\t\t\t\t\t\tTagged Branch"+"\t\t\t\tActual Branch");
         tableLayout=(TableLayout) findViewById(R.id.table);
         try {
             stmt = connect.prepareStatement(query);
@@ -68,7 +68,8 @@ public class recon_report extends AppCompatActivity {
                 String id = rs.getString(1);
                 String tag = rs.getString(2)==null?"-":rs.getString(2);
                 String actual = rs.getString(3);
-                data.add(id+"\t"+"\t"+"\t"+"\t"+tag+"\t"+"\t"+"\t"+"\t"+"\t"+"\t"+"\t"+"\t"+"\t"+actual);
+                data.add("\t"+id+"\t\t\t\t\t\t"+tag+"\t\t\t\t\t\t\t\t\t"+actual);
+
             }
             String[] array = data.toArray(new String[0]);
             for (int i=0;i<array.length;i++){
@@ -82,9 +83,9 @@ public class recon_report extends AppCompatActivity {
                 TextView b6=new TextView(recon_report.this);
                 b6.setText(data.get(i));
                 b6.setTextColor(Color.BLACK);
-                b6.setGravity(Gravity.LEFT);
+                b6.setGravity(Gravity.CENTER);
                 b6.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
-                b6.setPadding(170,20,40,20);
+                b6.setPadding(100,20,40,20);
                 b6.setTextSize(15);
                 t.addView(b6);
                 tableLayout.addView(t);
