@@ -20,7 +20,7 @@ public class ConnectionClass {
 
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
 
-                ConnURL = "jdbc:jtds:sqlserver://iifl.rcst.in;DatabaseName=iifl;user=appUser;password=RCSP@ssw0rd123";
+                ConnURL = "jdbc:jtds:sqlserver://IP;DatabaseName=DB_NAME;user=USER_NAME;password=PASSWORD";
             conn = DriverManager.getConnection(ConnURL);
         } catch (SQLException se) {
 
