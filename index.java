@@ -73,7 +73,7 @@ public class index extends AppCompatActivity
                 asset_count=rs.getInt(1);
             }
             //Qry-2
-            query = "select count(distinct initiator) from multiple_audit where initiator not in ('-')";
+            query = "";
             stmt = connect.prepareStatement(query);
             rs = stmt.executeQuery();
             if(rs.next())
@@ -81,7 +81,7 @@ public class index extends AppCompatActivity
                 user_count=rs.getInt(1);
             }
             //Qry-3
-            query = "select count (distinct sublocation) from multiple_audit where initiator =?";
+            query = "";
             stmt = connect.prepareStatement(query);
             stmt.setString(1,user_name.toString());
             rs = stmt.executeQuery();
@@ -90,7 +90,7 @@ public class index extends AppCompatActivity
                 user_audit_count=rs.getInt(1);
             }
             //Qry-4
-            query = "select count (distinct audit_name) from multiple_audit";
+            query = "";
             stmt = connect.prepareStatement(query);
             rs = stmt.executeQuery();
             if(rs.next())
