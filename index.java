@@ -65,7 +65,7 @@ public class index extends AppCompatActivity
 
             //Query for pie charts
             //Qry-1
-            query = "select count(distinct asset_id) from multiple_audit where initiator not in ('-')";
+            query = "";
             stmt = connect.prepareStatement(query);
             rs = stmt.executeQuery();
             if(rs.next())
