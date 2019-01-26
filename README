@@ -1,4 +1,4 @@
-#QRScanner<br>
+#QRScanner
 #This is a bar code scanning app
 #This app is integrated with ZXing library to scan barcodes
 #This is the basic application in which you are connecting and submitting data to the database without any webservice or third party API.
