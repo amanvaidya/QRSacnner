@@ -1,9 +1,9 @@
 #QRScanner<br>
-#This is a bar code scanning app<br>
-#This app is integrated with ZXing library to scan barcodes<br>
-#This is the basic application in which you are connecting and submitting data to the database without any webservice or third party API.<br>
-#This app uses JSTL driver library, to connect with db.<br>
-#In case you want an app to be ready in a day, without any webservice, try this one.<br>
-#If you face any issue with the code, reach me out at amanvaidya700@gmail.com.<br>
-#Soon I'm going to provide updated version of this application integrated with REST and Retrofit.<br>
+#This is a bar code scanning app
+#This app is integrated with ZXing library to scan barcodes
+#This is the basic application in which you are connecting and submitting data to the database without any webservice or third party API.
+#This app uses JSTL driver library, to connect with db.
+#In case you want an app to be ready in a day, without any webservice, try this one.
+#If you face any issue with the code, reach me out at amanvaidya700@gmail.com.
+#Soon I'm going to provide updated version of this application integrated with REST and Retrofit.
 #Happy Coding:)
