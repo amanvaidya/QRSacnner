@@ -1,9 +1,9 @@
-This apllication is connecting with db using JTDS driver which is used too connect applicaiton with MSSQL database without using any web service.
-
-In connection class change add the ip, port number, db name, username and password for your mssql server and change the tables where ever necessary.
-
-This application is used to scan bar codes and qr codes and displaying pie chart at the time of login.
-
-Application is using zinxg library for bar code scanning
-
-Application includes flash light also.
+#QRScanner<br>
+#This is a bar code scanning app<br>
+#This app is integrated with ZXing library to scan barcodes<br>
+#This is the basic application in which you are connecting and submitting data to the database without any webservice or third party API.<br>
+#This app uses JSTL driver library, to connect with db.<br>
+#In case you want an app to be ready in a day, without any webservice, try this one.<br>
+#If you face any issue with the code, reach me out at amanvaidya700@gmail.com.<br>
+#Soon I'm going to provide updated version of this application integrated with REST and Retrofit.<br>
+#Happy Coding:)
